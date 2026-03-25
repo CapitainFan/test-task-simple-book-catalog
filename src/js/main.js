@@ -1,5 +1,7 @@
 import navbarHtml from '../pages/navbar.html?raw';
 import footerHtml from '../pages/footer.html?raw';
+import catalogColumnHtml from '../pages/catalogColumn.html?raw';
+import favouritesColumnHtml from '../pages/favouritesColumn.html?raw';
 import { searchBooks, getLoadingState, getErrorState } from './modules/api.js';
 import { loadFavourites } from './store/store.js';
 import { setBooks, appendBooks, setAuthorFilter, getAllBooks, getUniqueAuthors } from './modules/catalogRenderer.js';
@@ -8,8 +10,12 @@ import { initTheme } from './modules/handleTheme.js';
 
 document.getElementById('navbar').innerHTML = navbarHtml;
 document.getElementById('footer').innerHTML = footerHtml;
+document.getElementById('catalogColumn').innerHTML = catalogColumnHtml;
+document.getElementById('favouritesColumn').innerHTML = favouritesColumnHtml;
 
 const catalogContainer = document.getElementById('catalog');
+const favouritesList = document.getElementById('favourites-list');
+
 const loaderDiv = document.createElement('div');
 loaderDiv.id = 'loader';
 loaderDiv.style.display = 'none';
@@ -42,10 +48,8 @@ function addMobileFavouritesTrigger() {
     const isMobile = window.matchMedia('(max-width: 768px)').matches;
     if (!isMobile) return;
 
-    // Если триггер уже есть, не создаём повторно
     if (favouritesCol.querySelector('.favourites-trigger')) return;
 
-    // Создаём кнопку-триггер
     const trigger = document.createElement('div');
     trigger.className = 'favourites-trigger';
     trigger.innerHTML = `
@@ -61,14 +65,12 @@ function addMobileFavouritesTrigger() {
     });
     favouritesCol.appendChild(trigger);
 
-    // Закрытие панели при клике вне её
     document.addEventListener('click', (e) => {
         if (favouritesCol.classList.contains('open') && !favouritesCol.contains(e.target)) {
             favouritesCol.classList.remove('open');
         }
     });
 
-    // Закрытие при изменении размера окна на десктопный
     window.addEventListener('resize', () => {
         if (window.innerWidth > 768) {
             favouritesCol.classList.remove('open');
@@ -83,7 +85,6 @@ function initMobileFavourites() {
     const isMobile = window.matchMedia('(max-width: 768px)').matches;
     if (!isMobile) return;
 
-    // Создаём кнопку-триггер, если её нет
     if (!favouritesCol.querySelector('.favourites-trigger')) {
         const trigger = document.createElement('div');
         trigger.className = 'favourites-trigger';
@@ -111,29 +112,23 @@ function initMobileFavourites() {
 
     trigger.addEventListener('click', openFavourites);
 
-    // Закрытие по клику вне панели, но не при клике на кнопку удаления
     document.addEventListener('click', (e) => {
         if (favouritesCol.classList.contains('open')) {
-            // Если клик по кнопке удаления (сердечко) внутри панели – не закрываем
             if (e.target.closest('.favourite-btn')) {
                 return;
             }
-            // Если клик вне панели – закрываем
             if (!favouritesCol.contains(e.target)) {
                 closeFavourites();
             }
         }
     });
 
-    // Закрытие при изменении размера окна на десктопный
     window.addEventListener('resize', () => {
         if (window.innerWidth > 768) {
             favouritesCol.classList.remove('open');
         }
     });
 }
-
-
 
 async function loadBooks(query, page, append = false) {
     loaderDiv.style.display = 'block';
