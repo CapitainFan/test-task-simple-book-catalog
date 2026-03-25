@@ -1,5 +1,5 @@
 import cardTemplate from '../../pages/card.html?raw';
-import heartIcon from '../../assets/icons/heart.svg?raw';
+import heartIcon from '../../icons/heart.svg?raw';
 import { escapeHtml } from './utils.js';
 import { getCoverById } from './api.js';
 import { isFavourite } from '../store/store.js';
