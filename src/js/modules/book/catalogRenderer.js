@@ -1,8 +1,8 @@
-import cardTemplate from '../../pages/card.html?raw';
-import heartIcon from '../../icons/heart.svg?raw';
-import { escapeHtml } from './utils.js';
-import { getCoverById } from './api.js';
-import { isFavourite } from '../store/store.js';
+import cardTemplate from '../../../pages/card.html?raw';
+import heartIcon from '../../../icons/heart.svg?raw';
+import { escapeHtml } from '../../utils/bookUtils.js';
+import { getCoverById } from '../../api/bookApi.js';
+import { isFavourite } from '../../store/store.js';
 import { initCoverHandler } from './coverHandler.js';
 import { attachFavouriteButtons } from './eventHandlers.js';
 
@@ -49,30 +49,25 @@ function applyFiltersAndRender() {
     displayBooks(filtered);
 }
 
-// Установка полного списка книг (после поиска или начальной загрузки)
 export function setBooks(books) {
     allBooks = books;
     applyFiltersAndRender();
 }
 
-// Добавление книг в конец (для пагинации)
 export function appendBooks(books) {
     allBooks = [...allBooks, ...books];
     applyFiltersAndRender();
 }
 
-// Установка фильтра по автору
 export function setAuthorFilter(author) {
     currentAuthorFilter = author;
     applyFiltersAndRender();
 }
 
-// Получение всех книг (для избранного и выпадающего списка)
 export function getAllBooks() {
     return [...allBooks];
 }
 
-// Получение уникальных авторов
 export function getUniqueAuthors() {
     const authorsSet = new Set();
     allBooks.forEach(book => {
@@ -82,7 +77,6 @@ export function getUniqueAuthors() {
     return Array.from(authorsSet).sort();
 }
 
-// Для совместимости с existing кодом (если используется renderCatalog)
 export function renderCatalog(books, append = false) {
     if (append) {
         appendBooks(books);

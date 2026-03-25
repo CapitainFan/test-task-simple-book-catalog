@@ -1,8 +1,8 @@
-import favouritesCardTemplate from '../../pages/favouritesCard.html?raw';
-import heartIcon from '../../icons/heart.svg?raw';
-import { escapeHtml } from './utils.js';
-import { getCoverById } from './api.js';
-import { getFavourites } from '../store/store.js';
+import favouritesCardTemplate from '../../../pages/favouritesCard.html?raw';
+import heartIcon from '../../../icons/heart.svg?raw';
+import { escapeHtml } from '../../utils/bookUtils.js';
+import { getCoverById } from '../../api/bookApi.js';
+import { getFavourites } from '../../store/store.js';
 import { initCoverHandler } from './coverHandler.js';
 import { attachFavouriteButtons } from './eventHandlers.js';
 

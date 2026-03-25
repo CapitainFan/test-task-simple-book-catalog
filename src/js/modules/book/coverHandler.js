@@ -1,4 +1,4 @@
-import { escapeHtml } from './utils'
+import { escapeHtml } from '../../utils/bookUtils'
 
 export function initCoverHandler() {
     const cards = document.querySelectorAll('.book-card, .favourite-card');

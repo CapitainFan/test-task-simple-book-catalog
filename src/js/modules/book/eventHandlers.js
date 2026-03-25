@@ -1,4 +1,4 @@
-import { isFavourite, addToFavourites, removeFromFavourites } from '../store/store.js';
+import { isFavourite, addToFavourites, removeFromFavourites } from '../../store/store.js';
 import { renderFavourites } from './favouritesRenderer.js';
 import { getAllBooks } from './catalogRenderer.js';
 
