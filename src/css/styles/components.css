@@ -1,0 +1,127 @@
+/* Common "Favourite" Button */
+.favourite-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #ccc;
+    transition: color 0.2s;
+    font-size: 20px;
+}
+.favourite-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+    stroke: none;
+    pointer-events: none;
+}
+.favourite-btn.favourite-active {
+    color: var(--heart-active);
+}
+
+/* Icons & Filters */
+img.icon-book {
+    background-color: var(--accent-color);
+    border-radius: 11px;
+    padding: 8px;
+    width: 33px;
+    height: 33px;
+    box-sizing: border-box;
+    margin-right: 5px;
+}
+.heart-square {
+    background-color: var(--button-bg);
+    border-radius: 10px;
+    width: 33px;
+    height: 33px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    margin-right: 5px;
+}
+.heart-icon {
+    width: 18px;
+    height: 18px;
+    color: var(--accent-color);
+    stroke: currentColor;
+    fill: none;
+}
+.filter-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.filter-container label {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 32px;
+    margin: 0;
+    padding: 0;
+}
+#author-filter {
+    padding: 6px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    font-size: 12px;
+    background: var(--card-bg);
+    cursor: pointer;
+    width: 300px;
+    height: 32px;
+    box-sizing: border-box;
+    outline: none;
+    color: var(--text-primary);
+}
+#author-filter:focus,
+#author-filter:active,
+#author-filter:hover {
+    outline: none;
+    box-shadow: none;
+    border-color: var(--border-color);
+}
+
+/* Spinner & Loader */
+.spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--border-color);
+    border-top-color: var(--text-primary);
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+    margin-right: 8px;
+}
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+#loader {
+    text-align: center;
+    padding: 20px;
+    background: var(--button-bg);
+    margin: 20px;
+}
+#load-more {
+    display: block;
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 10px;
+    transition: background 0.2s;
+    height: 48px;
+}
+#load-more:disabled {
+    background: var(--text-muted);
+    cursor: not-allowed;
+}
+#error-message {
+    text-align: center;
+    background: #ffe6e6;
+    border: 1px solid #ff9999;
+    border-radius: 4px;
+    color: #d32f2f;
+}

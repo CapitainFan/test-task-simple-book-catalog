@@ -1,0 +1,9 @@
+/* Headings */
+h1, h2, h3, h4, h5, h6,
+.navbar h4,
+.favourites-header h2,
+.book-title,
+.favourite-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 500;
+}

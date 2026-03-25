@@ -1,0 +1,122 @@
+/* Favourites Column */
+.favourites-column {
+    width: 200px;
+    flex-shrink: 0;
+    background: var(--bg-secondary);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 15px;
+    margin-top: 19px;
+    margin-bottom: 17px;
+}
+
+.favourites-header {
+    padding: 15px;
+    border-bottom: 1px solid var(--border-color);
+    background: var(--bg-secondary);
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+}
+.favourites-header h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: -4px;
+    color: var(--text-primary);
+}
+.favourites-header text {
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+.favourites-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 5px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.favourites-list::-webkit-scrollbar {
+    display: none;
+}
+.favourite-card {
+    display: flex;
+    align-items: stretch;
+    gap: 8px;
+    padding: 5px;
+    border: none;
+    background: var(--bg-secondary);
+    margin-bottom: 12px;
+    min-height: auto;
+    border-bottom: 1px solid var(--border-color);
+}
+.favourite-cover {
+    height: 70px;
+    width: 46px;
+    flex-shrink: 0;
+    background-color: var(--button-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 4px;
+}
+.favourite-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.favourite-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    text-align: left;
+    align-self: center;
+    width: 100px;
+}
+.favourite-title {
+    font-size: 10px;
+    font-weight: bold;
+    margin: 0;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.favourite-book-author {
+    font-size: 9px;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: -5px;
+    margin-top: -5px;
+}
+.favourite-book-year {
+    font-size: 9px;
+    color: var(--text-muted);
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.favourite-card .favourite-btn {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    align-self: center;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.favourite-card .favourite-btn svg {
+    width: 15px;
+    height: 15px;
+    fill: currentColor;
+    stroke: none;
+    pointer-events: none;
+}
