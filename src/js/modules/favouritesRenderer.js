@@ -12,10 +12,19 @@ export function renderFavourites() {
     container.innerHTML = '';
 
     if (!favourites.length) {
-        container.innerHTML = 'No favourites';
-        container.style.display = 'flex';
-        container.style.justifyContent = 'center';
-        container.style.alignItems = 'center';
+        container.innerHTML = `
+            <div style="display: flex; justify-content: center; align-items: center; height: 100%; width: 100%;">
+                No favourites
+            </div>
+        `;
+        return;
+    }
+
+    const countSpan = document.getElementById('favourites-count');
+    if (countSpan) countSpan.innerText = favourites.length;
+
+    if (!favourites.length) {
+        container.innerHTML = '<p>No favourites</p>';
         return;
     }
 

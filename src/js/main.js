@@ -1,8 +1,9 @@
+// src/js/main.js
 import navbarHtml from '../pages/navbar.html?raw';
 import footerHtml from '../pages/footer.html?raw';
 import { searchBooks, getLoadingState, getErrorState } from './modules/api.js';
 import { loadFavourites } from './store/store.js';
-import { renderCatalog, getCurrentBooks } from './modules/catalogRenderer.js';
+import { setBooks, appendBooks, setAuthorFilter, getAllBooks, getUniqueAuthors } from './modules/catalogRenderer.js';
 import { renderFavourites } from './modules/favouritesRenderer.js';
 
 document.getElementById('navbar').innerHTML = navbarHtml;
@@ -33,7 +34,6 @@ catalogContainer.parentNode.insertBefore(loadMoreButton, catalogContainer.nextSi
 let currentQuery = '';
 let currentPage = 1;
 let totalBooks = 0;
-let allBooks = [];
 
 async function loadBooks(query, page, append = false) {
     loaderDiv.style.display = 'block';
@@ -53,28 +53,47 @@ async function loadBooks(query, page, append = false) {
     }
 
     if (books.length === 0 && !append) {
-        renderCatalog([], false);
+        setBooks([]);
         loadMoreButton.style.display = 'none';
         return;
     }
 
     if (!append) {
-        renderCatalog(books, false);
+        setBooks(books);
         totalBooks = total;
-        allBooks = books;
         currentPage = page;
     } else {
-        renderCatalog(books, true);
-        allBooks = [...allBooks, ...books];
+        appendBooks(books);
         currentPage = page;
     }
 
-    if (allBooks.length < totalBooks) {
+    if (getAllBooks().length < totalBooks) {
         loadMoreButton.style.display = 'block';
         loadMoreButton.disabled = false;
     } else {
         loadMoreButton.style.display = 'none';
     }
+
+    populateAuthorFilter();
+}
+
+function populateAuthorFilter() {
+    const select = document.getElementById('author-filter');
+    if (!select) return;
+    const authors = getUniqueAuthors();
+    const currentValue = select.value;
+    select.innerHTML = '<option value="">All authors</option>';
+    authors.forEach(author => {
+        const option = document.createElement('option');
+        option.value = author;
+        option.textContent = author;
+        if (author === currentValue) option.selected = true;
+        select.appendChild(option);
+    });
+}
+
+function handleAuthorFilterChange(e) {
+    setAuthorFilter(e.target.value);
 }
 
 async function handleSearch() {
@@ -116,16 +135,19 @@ async function init() {
     const searchInput = await waitForElement('#search-input');
     searchInput.addEventListener('input', handleSearch);
     loadMoreButton.addEventListener('click', loadMore);
+    const authorFilter = await waitForElement('#author-filter');
+    authorFilter.addEventListener('change', handleAuthorFilterChange);
+
     const initialBooks = await searchBooks('frontend', 1, 30);
-    renderCatalog(initialBooks.books, false);
+    setBooks(initialBooks.books);
     totalBooks = initialBooks.total;
-    allBooks = initialBooks.books;
-    currentPage = 1;
     currentQuery = 'frontend';
-    if (allBooks.length < totalBooks) {
+    currentPage = 1;
+    if (getAllBooks().length < totalBooks) {
         loadMoreButton.style.display = 'block';
         loadMoreButton.disabled = false;
     }
+    populateAuthorFilter();
     renderFavourites();
 }
 

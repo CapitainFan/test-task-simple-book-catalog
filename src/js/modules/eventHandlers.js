@@ -1,6 +1,6 @@
 import { isFavourite, addToFavourites, removeFromFavourites } from '../store/store.js';
 import { renderFavourites } from './favouritesRenderer.js';
-import { getCurrentBooks } from './catalogRenderer.js';
+import { getAllBooks } from './catalogRenderer.js';
 
 export function attachFavouriteButtons() {
     document.querySelectorAll('.favourite-btn').forEach(btn => {
@@ -22,7 +22,7 @@ function handleFavouriteClick(e) {
         document.querySelectorAll(`.book-card[data-id="${bookId}"] .favourite-btn`).forEach(b => b.classList.remove('favourite-active'));
         renderFavourites();
     } else {
-        let book = getCurrentBooks().find(b => b.id === bookId);
+        let book = getAllBooks().find(b => b.id === bookId);
         if (!book) return;
         addToFavourites(book);
         btn.classList.add('favourite-active');

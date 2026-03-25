@@ -6,7 +6,8 @@ import { isFavourite } from '../store/store.js';
 import { initCoverHandler } from './coverHandler.js';
 import { attachFavouriteButtons } from './eventHandlers.js';
 
-let currentBooks = [];
+let allBooks = [];
+let currentAuthorFilter = '';
 
 function createCardHtml(book) {
     const coverUrl = getCoverById(book.cover_i, 'M');
@@ -23,33 +24,69 @@ function createCardHtml(book) {
         .replace(/\{\{\s*heartIcon\s*\}\}/g, heartIcon);
 }
 
-export function renderCatalog(books, append = false) {
-    if (append) {
-        books.forEach(book => {
-            const cardHtml = createCardHtml(book);
-            document.getElementById('catalog').insertAdjacentHTML('beforeend', cardHtml);
-            currentBooks.push(book);
-        });
-        initCoverHandler();
-        attachFavouriteButtons();
-    } else {
-        currentBooks = books;
-        const container = document.getElementById('catalog');
-        container.innerHTML = '';
-
-        if (!books.length) {
-            container.innerHTML = '<p>Nothing found</p>';
-            return;
-        }
-
-        books.forEach(book => {
-            container.insertAdjacentHTML('beforeend', createCardHtml(book));
-        });
-        initCoverHandler();
-        attachFavouriteButtons();
+function displayBooks(books) {
+    const container = document.getElementById('catalog');
+    container.innerHTML = '';
+    if (!books.length) {
+        container.innerHTML = '<p>Nothing found</p>';
+        return;
     }
+    books.forEach(book => {
+        container.insertAdjacentHTML('beforeend', createCardHtml(book));
+    });
+    initCoverHandler();
+    attachFavouriteButtons();
 }
 
-export function getCurrentBooks() {
-    return [...currentBooks];
+function applyFiltersAndRender() {
+    let filtered = [...allBooks];
+    if (currentAuthorFilter) {
+        filtered = filtered.filter(book => {
+            const authors = Array.isArray(book.author_name) ? book.author_name : [book.author_name];
+            return authors.includes(currentAuthorFilter);
+        });
+    }
+    displayBooks(filtered);
+}
+
+// Установка полного списка книг (после поиска или начальной загрузки)
+export function setBooks(books) {
+    allBooks = books;
+    applyFiltersAndRender();
+}
+
+// Добавление книг в конец (для пагинации)
+export function appendBooks(books) {
+    allBooks = [...allBooks, ...books];
+    applyFiltersAndRender();
+}
+
+// Установка фильтра по автору
+export function setAuthorFilter(author) {
+    currentAuthorFilter = author;
+    applyFiltersAndRender();
+}
+
+// Получение всех книг (для избранного и выпадающего списка)
+export function getAllBooks() {
+    return [...allBooks];
+}
+
+// Получение уникальных авторов
+export function getUniqueAuthors() {
+    const authorsSet = new Set();
+    allBooks.forEach(book => {
+        const authors = Array.isArray(book.author_name) ? book.author_name : [book.author_name];
+        authors.forEach(a => authorsSet.add(a));
+    });
+    return Array.from(authorsSet).sort();
+}
+
+// Для совместимости с existing кодом (если используется renderCatalog)
+export function renderCatalog(books, append = false) {
+    if (append) {
+        appendBooks(books);
+    } else {
+        setBooks(books);
+    }
 }
