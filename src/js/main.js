@@ -1,10 +1,10 @@
-// src/js/main.js
 import navbarHtml from '../pages/navbar.html?raw';
 import footerHtml from '../pages/footer.html?raw';
 import { searchBooks, getLoadingState, getErrorState } from './modules/api.js';
 import { loadFavourites } from './store/store.js';
 import { setBooks, appendBooks, setAuthorFilter, getAllBooks, getUniqueAuthors } from './modules/catalogRenderer.js';
 import { renderFavourites } from './modules/favouritesRenderer.js';
+import { initTheme } from './modules/handleTheme.js';
 
 document.getElementById('navbar').innerHTML = navbarHtml;
 document.getElementById('footer').innerHTML = footerHtml;
@@ -131,6 +131,7 @@ function waitForElement(selector) {
 }
 
 async function init() {
+    initTheme();
     loadFavourites();
     const searchInput = await waitForElement('#search-input');
     searchInput.addEventListener('input', handleSearch);
