@@ -10,6 +10,7 @@ export function initCoverHandler() {
         const author = img.getAttribute('data-author') || '';
 
         function replaceWithPlaceholder() {
+            if (!img || !img.parentNode) return;
             const coverDiv = img.parentNode;
             const placeholder = document.createElement('div');
             placeholder.className = 'book-placeholder';

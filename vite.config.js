@@ -5,14 +5,11 @@ export default defineConfig({
         rollupOptions: {
             input: {
                 main: 'index.html'
-            }
-        },
-        rollupOptions: {
+            },
             output: {
                 entryFileNames: 'assets/[name].js',
                 assetFileNames: 'assets/[name].[ext]'
             }
         }
-    },
-    publicDir: 'src/assets',
+    }
 });
