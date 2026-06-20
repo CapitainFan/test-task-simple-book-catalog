@@ -54,6 +54,8 @@ img.icon-book {
     display: flex;
     align-items: center;
     gap: 8px;
+    visibility: hidden;
+    pointer-events: none;
 }
 .filter-container label {
     font-size: 13px;
